@@ -19,7 +19,7 @@ display:none;
     position: absolute;
     margin-left: 195px;
 }
-.virus
+.virus, .enemy
 {
 width:60px;
 height:60px;
@@ -77,6 +77,13 @@ e.preventDefault();
 //console.log(e.key);
 }
 
+
+function isCollide(a,b){
+    aRect = a.getBoundingClientRect();
+    bRect = b.getBoundingClientRect();
+
+    return !(( aRect.bottom > bRect.top) || (aRect.top > bRect.bottom)  || (aRect.right < bRect.left) || (aRect.left > bRect.right))
+}
 function start()
 {
 gameArea.classList.remove('hide');
@@ -87,7 +94,8 @@ window.requestAnimationFrame(gamePlay);
 for(x=0 ; x<5; x++){
     let roadLine = document.createElement('div');
     roadLine.setAttribute('class', 'lines');
-    roadLine.style.top = (x*150) + "px";
+    roadLine.y = (x*150);
+    roadLine.style.top = roadLine.y + "px";
     gameArea.appendChild(roadLine);
 }
 
@@ -102,6 +110,52 @@ gameArea.appendChild(virus);
 player.x = virus.offsetLeft;
 player.y = virus.offsetTop;
 
+for(x=0 ; x<3; x++){
+    let enemyVirus = document.createElement('div');
+    enemyVirus.setAttribute('class', 'enemy');
+    enemyVirus.y = ( (x+1) * 350) * -1;
+    enemyVirus.style.top = enemyVirus.y + "px";
+    enemyVirus.style.background = 'blue';
+    enemyVirus.style.left = Math.floor(Math.random() * 350) + "px";
+    gameArea.appendChild(enemyVirus);
+}
+
+
+}
+
+
+function moveEnemy(virus) {
+    let enemy = document.querySelectorAll('.enemy');
+    enemy.forEach( function(item){
+
+        if(isCollide(virus, item)){
+            console.log("Boom Hit");
+        }
+        if(item.y >= 750){
+            item.y = -300;
+            item.style.left = Math.floor(Math.random() * 350) + "px";
+
+        }
+        item.y += player.speed;
+        item.style.top = item.y + "px";
+
+    })
+
+}
+
+
+function moveLines() {
+    let lines = document.querySelectorAll('.lines');
+    lines.forEach( function(item){
+
+        if(item.y >= 700){
+            item.y -= 750;
+        }
+        item.y += player.speed;
+        item.style.top = item.y + "px";
+
+    })
+
 }
 function gamePlay()
 {
@@ -112,7 +166,8 @@ if(player.start)
 {
     
     //keys set up
-
+    moveLines();
+    moveEnemy(virus);
     if(keys.ArrowUp && player.y > (road.top + 70) ){ player.y -= player.speed}
     if(keys.ArrowDown && player.y < (road.bottom - 70) ){ player.y += player.speed}
     if(keys.ArrowLeft  &&  player.x>0 ){ player.x -= player.speed}

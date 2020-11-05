@@ -223,6 +223,8 @@ function endGame(){
 	startScreen.innerHTML = "Game Over <br> Your final score is " + player.score + " <br> Press here to restart the Game.";
 }
 
+
+
 function moveEnemy(virus) {
     let enemy = document.querySelectorAll('.enemy');
     enemy.forEach( function(item){
@@ -244,9 +246,14 @@ function moveEnemy(virus) {
 }
 
 
-function movefruit() {
+function movefruit(virus) {
+
     let fruit = document.querySelectorAll('.fruit');
     fruit.forEach( function(item){
+        if(isCollide(virus, item)){
+            player.score += 100;
+            
+        }
         if(item.y >= 750){
             item.y = -100;
             item.style.left = Math.floor(Math.random() * 350) + "px";
@@ -254,7 +261,6 @@ function movefruit() {
         }
         item.y += player.speed;
         item.style.top = item.y + "px";
-
     })
 
 }
@@ -287,7 +293,7 @@ if(player.start)
     //keys set up
     moveLines();
     moveEnemy(virus);
-   movefruit();
+   movefruit(virus);
     if(keys.ArrowUp && player.y > (road.top + 70) ){ player.y -= player.speed}
     if(keys.ArrowDown && player.y < (road.bottom - 85) ){ player.y += player.speed}
     if(keys.ArrowLeft  &&  player.x>0 ){ player.x -= player.speed}

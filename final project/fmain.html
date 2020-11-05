@@ -177,12 +177,10 @@ for(x=0 ; x<3; x++){
     enemyVirus.setAttribute('class', 'enemy');
     enemyVirus.y = ( (x+1) * 350) * -1;
     enemyVirus.style.top = enemyVirus.y + "px";
-    enemyVirus.style.background-image = 
-    url('https://p7.hiclipart.compreview/158/226/428/fruit-tree-euclidean-vector-large-painted-apples-png-clipart.jpg')
+    //enemyVirus.style.backgroundImage = url('https://p7.hiclipart.compreview/158/226/428/fruit-tree-euclidean-vector-large-painted-apples-png-clipart.jpg');
     enemyVirus.style.left = Math.floor(Math.random() * 350) + "px";
     gameArea.appendChild(enemyVirus);
 }
-
 
 }
 
@@ -232,7 +230,7 @@ function gamePlay()
 {
 
     let virus = document.querySelector('.virus');
-    let road = gameArea.getB undingClientRect();
+    let road = gameArea.getBoundingClientRect();
 
 if(player.start)
 {

@@ -56,6 +56,17 @@ background-size: 100% 100%;
     background-size: 100% 100%;
 }
 
+.fruit{
+    background-image: url('https://www.pinclipart.com/picdir/middle/8-84937_banana-clip-art-background-transparent-background-banana-clipart.png');
+    width:60px;
+height:60px;
+border-radius:50%;
+position:absolute;
+bottom:120px; 
+background-color:red;
+background-repeat: no-repeat;
+background-size: 100% 100%;
+}
 
 .gameArea{
     width: 400px;
@@ -192,6 +203,18 @@ for(x=0 ; x<3; x++){
     gameArea.appendChild(enemyVirus);
 }
 
+
+for(x=0 ; x<3; x++){
+    let fruit = document.createElement('div');
+    fruit.setAttribute('class', 'fruit');
+    fruit.y = ( (x+1) * 350) * -1;
+    fruit.style.top = fruit.y + "px";
+    //enemyVirus.style.backgroundImage = url('https://p7.hiclipart.compreview/158/226/428/fruit-tree-euclidean-vector-large-painted-apples-png-clipart.jpg');
+    fruit.style.left = Math.floor(Math.random() * 350) + "px";
+    gameArea.appendChild(fruit);
+}
+
+
 }
 
 function endGame(){	
@@ -210,6 +233,22 @@ function moveEnemy(virus) {
         }
         if(item.y >= 750){
             item.y = -300;
+            item.style.left = Math.floor(Math.random() * 350) + "px";
+
+        }
+        item.y += player.speed;
+        item.style.top = item.y + "px";
+
+    })
+
+}
+
+
+function movefruit() {
+    let fruit = document.querySelectorAll('.fruit');
+    fruit.forEach( function(item){
+        if(item.y >= 750){
+            item.y = -100;
             item.style.left = Math.floor(Math.random() * 350) + "px";
 
         }
@@ -248,6 +287,7 @@ if(player.start)
     //keys set up
     moveLines();
     moveEnemy(virus);
+   movefruit();
     if(keys.ArrowUp && player.y > (road.top + 70) ){ player.y -= player.speed}
     if(keys.ArrowDown && player.y < (road.bottom - 85) ){ player.y += player.speed}
     if(keys.ArrowLeft  &&  player.x>0 ){ player.x -= player.speed}

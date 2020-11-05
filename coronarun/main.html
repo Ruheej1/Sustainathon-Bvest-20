@@ -11,15 +11,31 @@ padding:0px;
 {
 display:none;
 }
+
+.lines{
+    width: 10px;
+    height: 100px;
+    background: white;
+    position: absolute;
+    margin-left: 195px;
+}
 .virus
 {
 width:60px;
 height:60px;
 border-radius:50%;
 position:absolute;
-left:50px;
 bottom:120px; 
 background-color:red;
+}
+
+.gameArea{
+    width: 400px;
+    height: 100vh;
+    background: #2d3436;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 </style>
 </head>
@@ -42,7 +58,7 @@ const gameArea = document.querySelector('.gameArea');
 console.log(gameArea);
 startScreen.addEventListener('click',start);
 
-let player = { };
+let player = { speed: 5};
 
 let keys ={ ArrowUp:false,ArrowDown:false, ArrowLeft:false, ArrowRight:false}
 document.addEventListener('keydown',keyDown);
@@ -67,15 +83,45 @@ gameArea.classList.remove('hide');
 startScreen.classList.add('hide');
 player.start=true;
 window.requestAnimationFrame(gamePlay);
+
+for(x=0 ; x<5; x++){
+    let roadLine = document.createElement('div');
+    roadLine.setAttribute('class', 'lines');
+    roadLine.style.top = (x*150) + "px";
+    gameArea.appendChild(roadLine);
+}
+
+
 let virus = document.createElement('div');
 virus.setAttribute('class','virus');
 gameArea.appendChild(virus);
+
+
+// keys set up
+
+player.x = virus.offsetLeft;
+player.y = virus.offsetTop;
+
 }
 function gamePlay()
 {
+
+    let virus = document.querySelector('.virus');
+    let road = gameArea.getBoundingClientRect();
 if(player.start)
 {
-window.requestAnimationFrame(gamePlay);
+    
+    //keys set up
+
+    if(keys.ArrowUp && player.y > (road.top + 70) ){ player.y -= player.speed}
+    if(keys.ArrowDown && player.y < (road.bottom - 70) ){ player.y += player.speed}
+    if(keys.ArrowLeft  &&  player.x>0 ){ player.x -= player.speed}
+    if(keys.ArrowRight && player.x < (road.width - 50)){ player.x += player.speed}
+
+    virus.style.top = player.y + "px";
+    virus.style.left = player.x + "px";
+
+    window.requestAnimationFrame(gamePlay);
 }
 }
 </script>

@@ -222,7 +222,7 @@ for(x=0 ; x<3; x++){
 for(x=0 ; x<3; x++){
     let fruit = document.createElement('div');
     fruit.setAttribute('class', 'fruit');
-    fruit.y = ( (x+1) * 350) * -1;
+    fruit.y = ( (x+1) * 350) * -2;
     fruit.style.top = fruit.y + "px";
     //enemyVirus.style.backgroundImage = url('https://p7.hiclipart.compreview/158/226/428/fruit-tree-euclidean-vector-large-painted-apples-png-clipart.jpg');
     fruit.style.left = Math.floor(Math.random() * 350) + "px";
@@ -233,7 +233,7 @@ for(x=0 ; x<3; x++){
 for(x=0 ; x<3; x++){
     let sanitiser = document.createElement('div');
     sanitiser.setAttribute('class', 'sanitiser');
-    sanitiser.y = ( (x+1) * 350) * -1;
+    sanitiser.y = ( (x+1) * 350) * -3;
     sanitiser.style.top = sanitiser.y + "px";
     sanitiser.style.left = Math.floor(Math.random() * 350) + "px";
     gameArea.appendChild(sanitiser);
@@ -337,8 +337,8 @@ if(player.start)
     moveEnemy(virus);
    movefruit(virus);
    movesanitiser(virus);
-    if(keys.ArrowUp && player.y > (road.top + 70) ){ player.y -= player.speed}
-    if(keys.ArrowDown && player.y < (road.bottom - 70) ){ player.y += player.speed}
+    if(keys.ArrowUp && player.y > (road.top + 50) ){ player.y -= player.speed}
+    if(keys.ArrowDown && player.y < (road.bottom - 50) ){ player.y += player.speed}
     if(keys.ArrowLeft  &&  player.x>0 ){ player.x -= player.speed}
     if(keys.ArrowRight && player.x < (road.width - 50)){ player.x += player.speed}
 
